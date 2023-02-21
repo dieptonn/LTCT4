@@ -29,6 +29,6 @@ Route::get('/create-order/{userId}','App\Http\Controllers\OrderManagermentRestCo
 
 
 Route::get('/listOrder', 'App\Http\Controllers\OrderManagermentRestController@listOrder');
-Route::get('/listOrderByStatus/{status}', 'App\Http\Controllers\OrderManageRmentRestController@listOrderByStatus');
+Route::get('/listOrderByStatus/{status}', 'App\Http\Controllers\OrderManagermentRestController@listOrderByStatus');
 
 Route::post('/update-productStatus/{productId}','App\Http\Controllers\OrderManagermentRestController@update_productStatus');
