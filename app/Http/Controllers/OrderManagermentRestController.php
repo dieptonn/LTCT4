@@ -245,37 +245,12 @@ class OrderManagermentRestController extends Controller
             print('error');
         }
     }
-    public function rateComment(Request $request, $orderId){
-        // $request->validate([
-        //     // 'orderId' => 'required',
-        //     'rate' => 'required|min:1|max:5|',
-        //     'comment' => 'min:0|max:255|',
-        // ]);
-        // $orders = Order::all();
-        // $orders = Order::where('orderId',$orderId)->update([
-        //     'rate' => $request,
-        //     'comment' => $request
-        // ]);
-        // $orders->save();
-
-        $rate = $request['rate'];
-        DB::table('orders')->where('orderId', $orderId)
-        ->update(['rate'=> $rate]);
-        // return "diep";
-        // dd($orders->rate);
-        $cmt = $request['comment'];
-        DB::table('orders')->where('orderId', $orderId)
-        ->update(['comment'=> $cmt]);
-        return "successfull";
-    }
-
-
 
 
     public function createOrder($userId){
 
         $user_info = DB::table('orders')->where('userId',$userId)->get();
-        
+
         return view('createOrder.create_order',[
             'userId'=>$userId,
             'user_info'=>$user_info
@@ -319,7 +294,7 @@ class OrderManagermentRestController extends Controller
 
         $data['comment'] = $request->comment;
         $data['rate'] = $request->rate;
-        
+
 
 
         DB::table('orders')->insert($data);
@@ -331,7 +306,7 @@ class OrderManagermentRestController extends Controller
             ->select('*')
             ->where('userId', '=', $userId)
             ->get();
-        
+
         $output = array();
         for ($i = 0; $i < count($orders);) {
             $tmparray = array();

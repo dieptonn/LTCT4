@@ -170,7 +170,7 @@ a:hover {
 </head>
 
 <body>
-    <?php 
+    <?php
     print(' <div style="margin:10px" class="btn btn-info" id="nguoi-dung"> Userid : '. $output[0]['userId'] .'</div>'); ?>
     <div class="wrapper">
 
@@ -196,12 +196,12 @@ a:hover {
                 </div>
             </div>
         </form>
-                                    
+
 
         <div class="order">
             <div class="list-order">
                 <div style="margin-bottom: 20px" class="list-order-count-donhang">
-                                        <?php   
+                                        <?php
                                     $message = Session::get('message');
                                     if($message){
                                         echo '<span style="margin-left:20px" class= "text-danger">',$message,'</span>';
@@ -209,7 +209,7 @@ a:hover {
                                     }
                                     ?>
                                     </div>
-                
+
                 <div class="list-order-info">
                     <div class="order-list-top">
                         <div class="order-list-top-title title1 ">Sản Phẩm</div>
@@ -280,7 +280,7 @@ a:hover {
                         <div class="order-bottom">
                             <div class="order-bottom-left" style="display: inline-flex">
                                 <div><a href="https://sp07-customerservice.web.app/home/order-detail?orderId=21&fbclid=IwAR1Su2lR4AwqWaFY7WEuIGzRZ7AhKjRnkvhRfFgZjyuuKIBrVuaTFVdsrRo" class="btn btn-success">Đánh giá </a></div>
-                                
+
                             </div>
                             <div class="order-bottom-right">
                                 <p><span><i class="fa-sharp fa-solid fa-sack-dollar"></i></span> Tổng số tiền :
@@ -293,7 +293,7 @@ a:hover {
                         ?>
                     </div>
 
-               
+
 
 
 </body>

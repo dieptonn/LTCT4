@@ -25,13 +25,7 @@ Route::get('/listOrderByUser/{userId}', 'App\Http\Controllers\OrderManagementCon
 Route::get('/getOrderByState/{status}', 'App\Http\Controllers\OrderManagementController@getOrderByStatus');
 Route::get('/createOrder', 'App\Http\Controllers\OrderManagementController@createOrder');
 
-
-
-Route::get('/rate-comment/{userId}',[OrderManagementController::class,'rateComment']);
-
-Route::post('/rate-comment-update/{userId}',[OrderManagementController::class,'rateCommentUpdate']);
-Route::post('/save-order/{userId}',[OrderManagementController::class,'saveOrder']);
-Route::get('/create-order/{userId}',[OrderManagementController::class,'createOrder']);
+Route::get('/save-order/{userId}',[OrderManagementController::class,'saveOrder']);
 
 
 Route::get('/listOrder', 'App\Http\Controllers\OrderManagementController@listOrder');

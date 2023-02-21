@@ -122,14 +122,15 @@
             display: flex;
             justify-content: space-between;
         }
-        .adress{
+
+        .adress {
             display: flex;
             justify-content: space-between;
         }
-        .form-select{
+
+        .form-select {
             width: 210px;
         }
-
     </style>
     <section class="delivery">
         <div class="container">
@@ -139,13 +140,16 @@
                         <div class="delivery-content-left-thongtinkhachhang">
                             Thông tin khách hàng
                         </div>
-                        <div class="delivery-content-left-login">
+
+
+                        {{-- <div class="delivery-content-left-login">
                             <p><span>Đã đăng ký? </span><button type="button" class="btn btn-success">Đăng nhập</button>
                             </p>
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="delivery-content-left-email">
-                        <div class="email"><input type="email" name="email" placeholder="Email Adress ( optional )" ></div>
+                        <div class="email"><input type="email" name="email"
+                                placeholder="Email Adress ( optional )"></div>
                         <div>
 
                             <div>
@@ -158,18 +162,20 @@
                     <div class="delivery-content-left-chitietgiaohang">
                         <div>
                             <div class="name-phone">
-                                <div class="name"><input type="text" name="name" id="" placeholder="Tên người nhận" ></div>
-                                <div class="phone"><input type="tel" name="phone" id="" placeholder="Số điện thoại" > </div>
+                                <div class="name"><input type="text" name="name" id=""
+                                        placeholder="Tên người nhận"></div>
+                                <div class="phone"><input type="tel" name="phone" id=""
+                                        placeholder="Số điện thoại"> </div>
 
                             </div>
                             <div class="adress">
-                                <input type="text" name="adress" placeholder="Địa chỉ" >
+                                <input type="text" name="adress" placeholder="Địa chỉ">
 
                             </div>
                             <div class="adress">
 
                                 <div>
-                                    <select class="form-select form-select-lg mb-3 "  id="city"
+                                    <select class="form-select form-select-lg mb-3 " id="city"
                                         aria-label=".form-select-sm">
                                         <option value="" selected>Chọn tỉnh thành</option>
                                     </select>
@@ -182,7 +188,8 @@
                                     </select>
                                 </div>
                                 <div>
-                                    <select class="form-select form-select-lg " id="ward" aria-label=".form-select-sm">
+                                    <select class="form-select form-select-lg " id="ward"
+                                        aria-label=".form-select-sm">
                                         <option value="" selected>Chọn phường xã</option>
                                     </select>
                                 </div>
@@ -202,7 +209,7 @@
                                     responseType: "application/json",
                                 };
                                 var promise = axios(Parameter);
-                                promise.then(function (result) {
+                                promise.then(function(result) {
                                     renderCity(result.data);
                                 });
 
@@ -210,7 +217,7 @@
                                     for (const x of data) {
                                         citis.options[citis.options.length] = new Option(x.Name, x.Id);
                                     }
-                                    citis.onchange = function () {
+                                    citis.onchange = function() {
                                         district.length = 1;
                                         ward.length = 1;
                                         if (this.value != "") {
@@ -221,7 +228,7 @@
                                             }
                                         }
                                     };
-                                    district.onchange = function () {
+                                    district.onchange = function() {
                                         ward.length = 1;
                                         const dataCity = data.filter((n) => n.Id === citis.value);
                                         if (this.value != "") {
@@ -260,40 +267,53 @@
                     </div>
 
                 </div>
-                <div class="delivery-content-right">
-                    <h4 style="text-align: center;">Danh sách sản phẩm</h4>
-                    <div class="order-center">
+               <?php
+                    print('
+
+                    <div class="delivery-content-right">
+
+                    <h4 style="text-align: center;">Danh sách sản phẩm</h4>');
+
+                    foreach ($cart['data'] as $product) {
+                        print(
+                        '<div class="order-center">
                         <div class="product-order">
                             <div class="order-center-left">
                                 <div class="img-product">
-                                    <a href="#"><img src="img/sp1.jfif" alt="" width="60px" height="60px"></a>
+                                    <a href="#"><img src="' . $product['image_url'] . '" alt="" width="60px"
+                                            height="60px"></a>
                                 </div>
                                 <div class="info-product">
                                     <div>
                                         <div class="name-product">
                                             <a href="#">
-                                                <p>Tên sản phẩm </p>
+                                                <p>' . $product['name'] . '</p>
                                             </a>
                                         </div>
                                         <div class="amount-product">
-                                            <p>x1</p>
+                                            <p>x ' . $product['quanty'] .'</p>
                                         </div>
                                     </div>
 
                                 </div>
                             </div>
                             <div class="order-center-right">
-                                <p>200.000đ</p>
+                                <p> ' .$product['total_price'] . '</p>
                             </div>
                         </div>
                     </div>
-                    <div class="voucher">
-                        <input type="text" placeholder="Nhập mã giảm giá">
-                    </div>
-                    <div class="order-bottom">
+                        ');
+                    }
+
+
+
+                    // <div class="voucher">
+                    //     <input type="text" placeholder="Nhập mã giảm giá">
+                    // </div>
+                    print('<div class="order-bottom">
                         <div class="flex ">
                             <div>Tổng các mục :</div>
-                            <div> 200.000đ</div>
+                            <div>' . $cart['totalPrice']. '</div>
                         </div>
                         <div class="flex">
                             <div>Phí vận chuyển :</div>
@@ -306,6 +326,10 @@
                         <div>230.000đ</div>
                     </div>
                 </div>
+
+                    ');
+
+               ?>
             </div>
 
         </div>
