@@ -171,7 +171,7 @@ a:hover {
 
 <body>
     {{-- <div style="margin:10px" class="btn btn-info" id="nguoi-dung"> Userid : {{$output->userId}}</div> --}}
-    <?php 
+    <?php
     print(' <div style="margin:10px" class="btn btn-info" id="nguoi-dung"> Userid : '. $output[0]['userId'] .'</div>'); ?>
 
     <div class="wrapper">
@@ -199,7 +199,7 @@ a:hover {
             </div>
         </form>
 
-                                    <?php   
+                                    <?php
                                     $message = Session::get('message');
                                     if($message){
                                         echo '<span style="margin-left:20px" class= "text-danger">',$message,'</span>';
@@ -208,7 +208,7 @@ a:hover {
                                     ?>
         <div class="order">
             <div class="list-order">
-                <div class="list-order-count-donhang">10 Đơn Hàng</div>
+                <div class="list-order-count-donhang">{{$count}} Đơn Hàng</div>
                 <div class="list-order-info">
                     <div class="order-list-top">
                         <div class="order-list-top-title title1 ">Sản Phẩm</div>
@@ -293,7 +293,7 @@ a:hover {
 
                     </div>
 
-                
+
 
 
 </body>

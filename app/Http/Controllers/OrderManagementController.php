@@ -14,9 +14,12 @@ use GuzzleHttp\Client;
 class OrderManagementController extends Controller
 {
 
-    public function listOrderByUser($userId)
+    public function listOrderByUser(Request $request)
     {
-
+        $userId = $request->id;
+        if($userId == null) {
+            $userId = 21;
+        }
         $orders = DB::table('orders')
             ->select('*')
             ->where('userId', '=', $userId)
@@ -70,11 +73,16 @@ class OrderManagementController extends Controller
 
 
 
-    public function getOrderByStatus($status)
+    public function getOrderByStatus(Request $request, $status)
     {
+        $userId = $request->id;
+        if($userId == null) {
+            $userId = 21;
+        }
         $orders = DB::table('orders')
             ->select('*')
             ->where('status', '=', $status)
+            ->where('userId', '=', $userId)
             ->get();
         $output = array();
         for ($i = 0; $i < count($orders);) {
@@ -119,7 +127,10 @@ class OrderManagementController extends Controller
             $i = $j;
             array_push($output, $tmparray);
         }
-        return view('orders.orderByState')->with('output', $output);
+        return view('orders.orderByState', [
+            'output' => $output,
+            'count'  => count($orders)
+        ]);
     }
 
 
@@ -198,16 +209,7 @@ class OrderManagementController extends Controller
         }
     }
 
-    public function createOrder($userId)
-    {
 
-        $user_info = DB::table('orders')->where('userId', $userId)->get();
-
-        return view('createOrder.create_order', [
-            'userId' => $userId,
-            'user_info' => $user_info
-        ]);
-    }
     public function saveOrder(Request $request, $userId)
     {
 
@@ -247,8 +249,8 @@ class OrderManagementController extends Controller
             ])
         ]);
 
-        $shipfee = json_decode($response->getBody()->getContents(), true);
-        dd($shipfee);
+        // $shipfee = json_decode($response->getBody()->getContents(), true);
+        // dd($shipfee);
 
         return view('orders.formCreateOrder', [
             'cart' => $cart

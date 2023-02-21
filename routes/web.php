@@ -21,7 +21,7 @@ Route::get('/', function () {
 });
 
 
-Route::get('/listOrderByUser/{userId}', 'App\Http\Controllers\OrderManagementController@listOrderByUser');
+Route::get('/listOrderByUser', 'App\Http\Controllers\OrderManagementController@listOrderByUser');
 Route::get('/getOrderByState/{status}', 'App\Http\Controllers\OrderManagementController@getOrderByStatus');
 Route::get('/createOrder', 'App\Http\Controllers\OrderManagementController@createOrder');
 
