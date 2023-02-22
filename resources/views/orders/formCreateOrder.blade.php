@@ -146,8 +146,7 @@
                         </div> --}}
                     </div>
                     <div class="delivery-content-left-email">
-                        <div class="email"><input type="email" name="email"
-                                value = "{{$user['email']}}" ></div>
+                        <div class="email"><input type="email" name="email" value="{{ $user['email'] }}"></div>
                         <div>
 
                             <div>
@@ -161,9 +160,9 @@
                         <div>
                             <div class="name-phone">
                                 <div class="name"><input type="text" name="name" id=""
-                                        value = "{{$user['name']}}"></div>
+                                        value="{{ $user['name'] }}"></div>
                                 <div class="phone"><input type="tel" name="phone" id=""
-                                        value = "{{$user['phoneNumber']}}"> </div>
+                                        value="{{ $user['phoneNumber'] }}"> </div>
 
                             </div>
                             <div class="adress">
@@ -293,6 +292,10 @@
                                                     console.log(result.data);
                                                     var shippingfee = document.getElementById("shippingfee");
                                                     shippingfee.innerHTML = `Phí vận chuyển là : ${result.data.data.totalFee}`;
+
+                                                    var totalshippingfee = document.getElementById("totalshippingfee");
+                                                    totalshippingfee.innerHTML = `${result.data.data.totalFee}`;
+
                                                 });
 
                                             }
@@ -314,10 +317,13 @@
                     </div>
                     <div class="delivery-content-left-chitietthanhtoan">
                         <p>Phương thức thanh toán</p>
-                        <input type="radio" name="checkout" id="thanhtoankhinhanhang">
-                        <label for="thanhtoankhinhanhang">Thanh toán khi nhận hàng</label>
-                        <input type="radio" name="checkout" id="nganhangdientu">
-                        <label for="nganhangdientu">Ngân hàng điện tử</label>
+                        <input type="radio" name="checkout" id="vnpay">
+                        <label for="thanhtoankhinhanhang">vnpay</label>
+                        <input type="radio" name="checkout" id="atm">
+                        <label for="nganhangdientu">atm</label>
+                        <input type="radio" name="checkout" id="shipcod">
+                        <label for="nganhangdientu">shipcod</label>
+
                     </div>
                     <div class="delivery-content-left-ghichu">
                         <p>Thông tin khác</p>
@@ -330,75 +336,68 @@
                 </div>
                 <?php
                 print '
-
-                                                                                                                                                                    <div class="delivery-content-right">
-
-                                                                                                                                                                    <h4 style="text-align: center;">Danh sách sản phẩm</h4>';
-
+                    <div class="delivery-content-right">
+                    <h4 style="text-align: center;">Danh sách sản phẩm</h4>';
                 foreach ($cart['data'] as $product) {
                     print '<div class="order-center">
-                                                                                                                                                                        <div class="product-order">
-                                                                                                                                                                            <div class="order-center-left">
-                                                                                                                                                                                <div class="img-product">
-                                                                                                                                                                                    <a href="#"><img src="' .
+                        <div class="product-order">
+                            <div class="order-center-left">
+                                <div class="img-product">
+                                    <a href="#"><img src="' .
                         $product['image_url'] .
                         '" alt="" width="60px"
-                                                                                                                                                                                            height="60px"></a>
-                                                                                                                                                                                </div>
-                                                                                                                                                                                <div class="info-product">
-                                                                                                                                                                                    <div>
-                                                                                                                                                                                        <div class="name-product">
-                                                                                                                                                                                            <a href="#">
-                                                                                                                                                                                                <p>' .
+                                            height="60px"></a>
+                                </div>
+                                <div class="info-product">
+                                    <div>
+                                        <div class="name-product">
+                                            <a href="#">
+                                                <p>' .
                         $product['name'] .
                         '</p>
-                                                                                                                                                                                            </a>
-                                                                                                                                                                                        </div>
-                                                                                                                                                                                        <div class="amount-product">
-                                                                                                                                                                                            <p>x ' .
+                                            </a>
+                                        </div>
+                                        <div class="amount-product">
+                                            <p>x ' .
                         $product['quanty'] .
                         '</p>
-                                                                                                                                                                                        </div>
-                                                                                                                                                                                    </div>
-
-                                                                                                                                                                                </div>
-                                                                                                                                                                            </div>
-                                                                                                                                                                            <div class="order-center-right">
-                                                                                                                                                                                <p> ' .
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="order-center-right">
+                                <p> ' .
                         $product['total_price'] .
                         '</p>
-                                                                                                                                                                            </div>
-                                                                                                                                                                        </div>
-                                                                                                                                                                    </div>
-                                                                                                                                                                        ';
+                            </div>
+                        </div>
+                    </div>
+                        ';
                 }
-
                 // <div class="voucher">
                 //     <input type="text" placeholder="Nhập mã giảm giá">
                 // </div>
                 print '<div class="order-bottom">
-                                                                                                                                                                        <div class="flex ">
-                                                                                                                                                                            <div>Tổng các mục :</div>
-                                                                                                                                                                            <div>' .
+                        <div class="flex ">
+                            <div>Tổng các mục :</div>
+                            <div>' .
                     $cart['totalPrice'] .
                     '</div>
-                                                                                                                                                                        </div>
-                                                                                                                                                                        <div class="flex">
-                                                                                                                                                                            <div>Phí vận chuyển :</div>
-                                                                                                                                                                            <div>30.000đ</div>
-                                                                                                                                                                        </div>
-
-                                                                                                                                                                    </div>
-                                                                                                                                                                    <div class="total-money flex">
-                                                                                                                                                                        <div>Tổng tiền hàng : </div>
-                                                                                                                                                                        <div>230.000đ</div>
-                                                                                                                                                                    </div>
-                                                                                                                                                                </div>
-
-                                                                                                                                                                    ';
-
+                        </div>
+                        <div class="flex">
+                            <div>Phí vận chuyển :</div>
+                            <div id = "totalshippingfee"></div>
+                        </div>
+                    </div>
+                    <div class="total-money flex">
+                        <div>Tổng tiền hàng : </div>
+                        <div>230.000đ</div>
+                    </div>              </div>
+                    ';
                 ?>
             </div>
+
+                </div>
 
         </div>
 
