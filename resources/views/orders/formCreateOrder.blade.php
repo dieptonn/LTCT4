@@ -330,8 +330,33 @@
                         <input type="text" placeholder="Để lại ghi chú cho đơn hàng">
                     </div>
                     <div class="delivery-content-left-order">
-                        <button type="button" class="btn btn-success">Đặt hàng</button>
+                        <button type="button" class="btn btn-success" id = "dathangbtn">Đặt hàng</button>
                     </div>
+
+                    <script>
+                        var dathangbtn = document.getElementById("dathangbtn");
+                        dathangbtn.addEventListener("click", function(){
+                            // var Parameter = {
+                            //                     url: "",
+                            //                     method: "GET",
+                            //                     headers: {
+                            //                         'token': '11802752-8ab4-11ed-b190-ea4934f9883e'
+                            //                     },
+                            //                     params: {
+                            //                         district_id: districtId
+                            //                     },
+                            //                     responseType: "application/json",
+                            //                 };
+                            //                 var promise = axios(Parameter);
+                            //                 promise.then(function(result) {
+                            //                     ward.length = 1;
+                            //                     // console.log(result.data.data);
+                            //                     for (const x of result.data.data) {
+                            //                         wards.options[wards.options.length] = new Option(x.WardName, x.WardCode);
+                            //                     }
+                            //                 });
+                        });
+                    </script>
 
                 </div>
                 <?php

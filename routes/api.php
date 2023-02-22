@@ -23,7 +23,7 @@ Route::post('createNewOrder', 'App\Http\Controllers\OrderManagermentRestControll
 // Route::get('listOrderByUser/{userId}', 'App\Http\Controllers\OrderManagermentRestController@listOrderByUser');
 
 Route::post('rate-comment/{orderId}', 'App\Http\Controllers\OrderManagermentRestController@rateComment');
-Route::post('/save-order/{userId}','App\Http\Controllers\OrderManagermentRestController@saveOrder');
+Route::post('/save-order','App\Http\Controllers\OrderManagermentRestController@saveOrder');
 Route::get('/create-order/{userId}','App\Http\Controllers\OrderManagermentRestController@createOrder');
 
 

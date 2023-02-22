@@ -256,7 +256,7 @@ class OrderManagermentRestController extends Controller
             'user_info'=>$user_info
         ]);
     }
-    public function saveOrder(Request $request, $userId){
+    public function saveOrder(Request $request){
 
         $data = array();
         $data['orderId'] = $request->orderId;
@@ -269,7 +269,7 @@ class OrderManagermentRestController extends Controller
         $data['size'] = $request->size;
         $data['color'] = $request->color;
         $data['status'] = $request->status;
-        $data['userId'] = $userId;
+        $data['userId'] = $request->userId;
         $data['detailAddress'] = $request->detailAddress;
         $data['ship_price'] = $request->ship_price;
         $data['payment_method'] = $request->payment_method;
@@ -284,14 +284,6 @@ class OrderManagermentRestController extends Controller
         $data['completed_at'] = date("Y-m-d H:i:s");
         $data['paytime'] = date("Y-m-d H:i:s");
         $data['order_time'] = date("Y-m-d H:i:s");
-
-        // $data['created_at'] = $request->created_at;
-        // $data['update_at'] = $request->update_at;
-        // $data['shiptime_start_at'] = $request->shiptime_start_at;
-        // $data['completed_at']  =$request->completed_at;
-        // $data['paytime'] = $request->paytime;
-        // $data['order_time'] = $request->order_time;
-
         $data['comment'] = $request->comment;
         $data['rate'] = $request->rate;
 
@@ -304,7 +296,7 @@ class OrderManagermentRestController extends Controller
 
         $orders = DB::table('orders')
             ->select('*')
-            ->where('userId', '=', $userId)
+            ->where('userId', '=', $request->userId)
             ->get();
 
         $output = array();
@@ -341,7 +333,6 @@ class OrderManagermentRestController extends Controller
                     $tmpProduct["size"] = $orders[$j]->size;
                     $tmpProduct["color"] = $orders[$j]->color;
                     array_push($tmparray["products"], $tmpProduct);
-                    // return "co den day";
                 } else {
                     break;
                 }
