@@ -210,27 +210,27 @@ class OrderManagementController extends Controller
     }
 
 
-    public function saveOrder(Request $request, $userId)
+    public function saveOrder(Request $request)
     {
 
         $url = 'https://nguyenletuananh.name.vn/laravel/public/Api/Product-Cart';
         $response = file_get_contents($url);
         $cart = json_decode($response, true); // lay duoc du lieu nhe
 
-        // $client = new Client();
-        // $response = $client->post('https://tungsnk.tech:8082/api/shipping_fee', [
-        //     'headers' => [
-        //         'Content-Type' => 'application/json',
-        //         'Accept' => 'application/json'
-        //     ],
-        //     'body' => json_encode([
-        //         'from_district_id' => 1488,
-        //         'to_district_id' => 1452,
-        //         'to_ward_code' => '21012',
-        //         'weight' => 200,
-        //         'cod_value' => 10000
-        //     ])
-        // ]);
+        $client = new Client();
+        $response = $client->post('https://tungsnk.tech:8082/api/shipping_fee', [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json'
+            ],
+            'body' => json_encode([
+                'from_district_id' => 1488,
+                'to_district_id' => 1452,
+                'to_ward_code' => '21012',
+                'weight' => 200,
+                'cod_value' => 10000
+            ])
+        ]);
 
         // $shipfee = json_decode($response->getBody()->getContents(), true);
 

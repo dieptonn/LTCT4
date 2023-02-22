@@ -9,7 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <title>Delivery</title>
+    <title>new order</title>
 </head>
 
 <body>
@@ -140,8 +140,6 @@
                         <div class="delivery-content-left-thongtinkhachhang">
                             Thông tin khách hàng
                         </div>
-
-
                         {{-- <div class="delivery-content-left-login">
                             <p><span>Đã đăng ký? </span><button type="button" class="btn btn-success">Đăng nhập</button>
                             </p>
@@ -203,42 +201,105 @@
                                 var citis = document.getElementById("city");
                                 var districts = document.getElementById("district");
                                 var wards = document.getElementById("ward");
+                                var provincceId;
                                 var Parameter = {
-                                    url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+                                    url: "https://online-gateway.ghn.vn/shiip/public-api/master-data/province",
                                     method: "GET",
+                                    headers: {
+                                        'token': '11802752-8ab4-11ed-b190-ea4934f9883e'
+                                    },
                                     responseType: "application/json",
                                 };
                                 var promise = axios(Parameter);
                                 promise.then(function(result) {
-                                    renderCity(result.data);
+                                    // console.log(result.data.data);
+                                    renderCity(result.data.data);
                                 });
 
                                 function renderCity(data) {
                                     for (const x of data) {
-                                        citis.options[citis.options.length] = new Option(x.Name, x.Id);
+                                        citis.options[citis.options.length] = new Option(x.ProvinceName, x.ProvinceID);
                                     }
                                     citis.onchange = function() {
-                                        district.length = 1;
-                                        ward.length = 1;
-                                        if (this.value != "") {
-                                            const result = data.filter(n => n.Id === this.value);
-
-                                            for (const k of result[0].Districts) {
-                                                district.options[district.options.length] = new Option(k.Name, k.Id);
+                                        // console.log(this.value);
+                                        var provincceId = this.value;
+                                        var Parameter = {
+                                            url: "https://online-gateway.ghn.vn/shiip/public-api/master-data/district",
+                                            method: "GET",
+                                            headers: {
+                                                'token': '11802752-8ab4-11ed-b190-ea4934f9883e'
+                                            },
+                                            data: {
+                                                province_id: 202
+                                            },
+                                            responseType: "application/json",
+                                        };
+                                        var promise = axios(Parameter);
+                                        promise.then(function(result) {
+                                            district.length = 1;
+                                            ward.length = 1;
+                                            for (const x of result.data.data) {
+                                                // console.log(provincceId);
+                                                if (x.ProvinceID == provincceId) {
+                                                    // console.log(x);
+                                                    districts.options[districts.options.length] = new Option(x.DistrictName, x
+                                                        .DistrictID);
+                                                }
                                             }
-                                        }
-                                    };
-                                    district.onchange = function() {
-                                        ward.length = 1;
-                                        const dataCity = data.filter((n) => n.Id === citis.value);
-                                        if (this.value != "") {
-                                            const dataWards = dataCity[0].Districts.filter(n => n.Id === this.value)[0].Wards;
 
-                                            for (const w of dataWards) {
-                                                wards.options[wards.options.length] = new Option(w.Name, w.Id);
+
+
+                                        });
+
+                                        district.onchange = function() {
+                                            ward.length = 1;
+                                            districtId = this.value;
+
+                                            var Parameter = {
+                                                url: "https://online-gateway.ghn.vn/shiip/public-api/master-data/ward",
+                                                method: "GET",
+                                                headers: {
+                                                    'token': '11802752-8ab4-11ed-b190-ea4934f9883e'
+                                                },
+                                                params: {
+                                                    district_id: districtId
+                                                },
+                                                responseType: "application/json",
+                                            };
+                                            var promise = axios(Parameter);
+                                            promise.then(function(result) {
+                                                ward.length = 1;
+                                                // console.log(result.data.data);
+                                                for (const x of result.data.data) {
+                                                    wards.options[wards.options.length] = new Option(x.WardName, x.WardCode);
+                                                }
+                                            });
+
+                                            ward.onchange = function() {
+
+                                                var Parameter = {
+                                                    url: "https://tungsnk.tech:8082/api/shipping_fee",
+                                                    method: "POST",
+                                                    data: {
+                                                        "from_district_id": 1488,
+                                                        "to_district_id": districtId,
+                                                        "to_ward_code": "440610",
+                                                        "cod_value": 10000
+                                                    },
+                                                    responseType: "application/json",
+                                                };
+                                                var promise = axios(Parameter);
+                                                promise.then(function(result) {
+                                                    console.log(result.data);
+                                                    var shippingfee = document.getElementById("shippingfee");
+                                                    shippingfee.innerHTML = `Phí vận chuyển là : ${result.data.data.totalFee}`;
+                                                });
+
                                             }
-                                        }
+
+                                        };
                                     };
+
                                 }
                             </script>
                             <div>
@@ -248,7 +309,7 @@
                         </div>
                     </div>
                     <div class="delivery-content-left-phuongthucgiaohang">
-                        <p>Phí vận chuyển : 30.000đ</p>
+                        <p id="shippingfee">Phí vận chuyển : </p>
                         <input type="text" name="" id="" value="Giao hàng toàn quốc">
                     </div>
                     <div class="delivery-content-left-chitietthanhtoan">
@@ -267,69 +328,76 @@
                     </div>
 
                 </div>
-               <?php
-                    print('
+                <?php
+                print '
 
-                    <div class="delivery-content-right">
+                                                                                                                                                                    <div class="delivery-content-right">
 
-                    <h4 style="text-align: center;">Danh sách sản phẩm</h4>');
+                                                                                                                                                                    <h4 style="text-align: center;">Danh sách sản phẩm</h4>';
 
-                    foreach ($cart['data'] as $product) {
-                        print(
-                        '<div class="order-center">
-                        <div class="product-order">
-                            <div class="order-center-left">
-                                <div class="img-product">
-                                    <a href="#"><img src="' . $product['image_url'] . '" alt="" width="60px"
-                                            height="60px"></a>
-                                </div>
-                                <div class="info-product">
-                                    <div>
-                                        <div class="name-product">
-                                            <a href="#">
-                                                <p>' . $product['name'] . '</p>
-                                            </a>
-                                        </div>
-                                        <div class="amount-product">
-                                            <p>x ' . $product['quanty'] .'</p>
-                                        </div>
-                                    </div>
+                foreach ($cart['data'] as $product) {
+                    print '<div class="order-center">
+                                                                                                                                                                        <div class="product-order">
+                                                                                                                                                                            <div class="order-center-left">
+                                                                                                                                                                                <div class="img-product">
+                                                                                                                                                                                    <a href="#"><img src="' .
+                        $product['image_url'] .
+                        '" alt="" width="60px"
+                                                                                                                                                                                            height="60px"></a>
+                                                                                                                                                                                </div>
+                                                                                                                                                                                <div class="info-product">
+                                                                                                                                                                                    <div>
+                                                                                                                                                                                        <div class="name-product">
+                                                                                                                                                                                            <a href="#">
+                                                                                                                                                                                                <p>' .
+                        $product['name'] .
+                        '</p>
+                                                                                                                                                                                            </a>
+                                                                                                                                                                                        </div>
+                                                                                                                                                                                        <div class="amount-product">
+                                                                                                                                                                                            <p>x ' .
+                        $product['quanty'] .
+                        '</p>
+                                                                                                                                                                                        </div>
+                                                                                                                                                                                    </div>
 
-                                </div>
-                            </div>
-                            <div class="order-center-right">
-                                <p> ' .$product['total_price'] . '</p>
-                            </div>
-                        </div>
-                    </div>
-                        ');
-                    }
+                                                                                                                                                                                </div>
+                                                                                                                                                                            </div>
+                                                                                                                                                                            <div class="order-center-right">
+                                                                                                                                                                                <p> ' .
+                        $product['total_price'] .
+                        '</p>
+                                                                                                                                                                            </div>
+                                                                                                                                                                        </div>
+                                                                                                                                                                    </div>
+                                                                                                                                                                        ';
+                }
 
+                // <div class="voucher">
+                //     <input type="text" placeholder="Nhập mã giảm giá">
+                // </div>
+                print '<div class="order-bottom">
+                                                                                                                                                                        <div class="flex ">
+                                                                                                                                                                            <div>Tổng các mục :</div>
+                                                                                                                                                                            <div>' .
+                    $cart['totalPrice'] .
+                    '</div>
+                                                                                                                                                                        </div>
+                                                                                                                                                                        <div class="flex">
+                                                                                                                                                                            <div>Phí vận chuyển :</div>
+                                                                                                                                                                            <div>30.000đ</div>
+                                                                                                                                                                        </div>
 
+                                                                                                                                                                    </div>
+                                                                                                                                                                    <div class="total-money flex">
+                                                                                                                                                                        <div>Tổng tiền hàng : </div>
+                                                                                                                                                                        <div>230.000đ</div>
+                                                                                                                                                                    </div>
+                                                                                                                                                                </div>
 
-                    // <div class="voucher">
-                    //     <input type="text" placeholder="Nhập mã giảm giá">
-                    // </div>
-                    print('<div class="order-bottom">
-                        <div class="flex ">
-                            <div>Tổng các mục :</div>
-                            <div>' . $cart['totalPrice']. '</div>
-                        </div>
-                        <div class="flex">
-                            <div>Phí vận chuyển :</div>
-                            <div>30.000đ</div>
-                        </div>
+                                                                                                                                                                    ';
 
-                    </div>
-                    <div class="total-money flex">
-                        <div>Tổng tiền hàng : </div>
-                        <div>230.000đ</div>
-                    </div>
-                </div>
-
-                    ');
-
-               ?>
+                ?>
             </div>
 
         </div>

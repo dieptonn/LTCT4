@@ -25,7 +25,7 @@ Route::get('/listOrderByUser', 'App\Http\Controllers\OrderManagementController@l
 Route::get('/getOrderByState/{status}', 'App\Http\Controllers\OrderManagementController@getOrderByStatus');
 Route::get('/createOrder', 'App\Http\Controllers\OrderManagementController@createOrder');
 
-Route::get('/save-order/{userId}',[OrderManagementController::class,'saveOrder']);
+Route::get('/save-order',[OrderManagementController::class,'saveOrder']);
 
 
 Route::get('/listOrder', 'App\Http\Controllers\OrderManagementController@listOrder');
