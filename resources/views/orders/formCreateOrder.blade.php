@@ -330,99 +330,83 @@
                         <input type="text" placeholder="Để lại ghi chú cho đơn hàng">
                     </div>
                     <div class="delivery-content-left-order">
-                        <button type="button" class="btn btn-success" id = "dathangbtn">Đặt hàng</button>
+                        <button type="button" class="btn btn-success" id="dathangbtn">Đặt hàng</button>
                     </div>
+
 
                     <script>
                         var dathangbtn = document.getElementById("dathangbtn");
-                        dathangbtn.addEventListener("click", function(){
-                            // var Parameter = {
-                            //                     url: "",
-                            //                     method: "GET",
-                            //                     headers: {
-                            //                         'token': '11802752-8ab4-11ed-b190-ea4934f9883e'
-                            //                     },
-                            //                     params: {
-                            //                         district_id: districtId
-                            //                     },
-                            //                     responseType: "application/json",
-                            //                 };
-                            //                 var promise = axios(Parameter);
-                            //                 promise.then(function(result) {
-                            //                     ward.length = 1;
-                            //                     // console.log(result.data.data);
-                            //                     for (const x of result.data.data) {
-                            //                         wards.options[wards.options.length] = new Option(x.WardName, x.WardCode);
-                            //                     }
-                            //                 });
+
+                        dathangbtn.addEventListener("click", function() {
+
                         });
                     </script>
 
                 </div>
                 <?php
                 print '
-                    <div class="delivery-content-right">
-                    <h4 style="text-align: center;">Danh sách sản phẩm</h4>';
+                                    <div class="delivery-content-right">
+                                    <h4 style="text-align: center;">Danh sách sản phẩm</h4>';
                 foreach ($cart['data'] as $product) {
                     print '<div class="order-center">
-                        <div class="product-order">
-                            <div class="order-center-left">
-                                <div class="img-product">
-                                    <a href="#"><img src="' .
+                                        <div class="product-order">
+                                            <div class="order-center-left">
+                                                <div class="img-product">
+                                                    <a href="#"><img src="' .
                         $product['image_url'] .
                         '" alt="" width="60px"
-                                            height="60px"></a>
-                                </div>
-                                <div class="info-product">
-                                    <div>
-                                        <div class="name-product">
-                                            <a href="#">
-                                                <p>' .
+                                                            height="60px"></a>
+                                                </div>
+                                                <div class="info-product">
+                                                    <div>
+                                                        <div class="name-product">
+                                                            <a href="#">
+                                                                <p>' .
                         $product['name'] .
                         '</p>
-                                            </a>
-                                        </div>
-                                        <div class="amount-product">
-                                            <p>x ' .
+                                                            </a>
+                                                        </div>
+                                                        <div class="amount-product">
+                                                            <p>x ' .
                         $product['quanty'] .
                         '</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="order-center-right">
-                                <p> ' .
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="order-center-right">
+                                                <p> ' .
                         $product['total_price'] .
                         '</p>
-                            </div>
-                        </div>
-                    </div>
-                        ';
+                                            </div>
+                                        </div>
+                                    </div>
+                                        ';
                 }
                 // <div class="voucher">
                 //     <input type="text" placeholder="Nhập mã giảm giá">
                 // </div>
                 print '<div class="order-bottom">
-                        <div class="flex ">
-                            <div>Tổng các mục :</div>
-                            <div>' .
+                                        <div class="flex ">
+                                            <div>Tổng các mục :</div>
+                                            <div>' .
                     $cart['totalPrice'] .
                     '</div>
-                        </div>
-                        <div class="flex">
-                            <div>Phí vận chuyển :</div>
-                            <div id = "totalshippingfee"></div>
-                        </div>
-                    </div>
-                    <div class="total-money flex">
-                        <div>Tổng tiền hàng : </div>
-                        <div>230.000đ</div>
-                    </div>              </div>
-                    ';
+                                        </div>
+                                        <div class="flex">
+                                            <div>Phí vận chuyển :</div>
+                                            <div id = "totalshippingfee"></div>
+                                        </div>
+                                    </div>
+                                    <div class="total-money flex">
+                                        <div>Tổng tiền hàng : </div>
+                                        <div>230.000đ</div>
+                                    </div>              </div>
+                                    ';
                 ?>
             </div>
 
-                </div>
+        </div>
 
         </div>
 
