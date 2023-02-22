@@ -217,42 +217,23 @@ class OrderManagementController extends Controller
         $response = file_get_contents($url);
         $cart = json_decode($response, true); // lay duoc du lieu nhe
 
-        $client = new Client();
-        $response = $client->post('https://tungsnk.tech:8082/api/shipping_fee', [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Accept' => 'application/json'
-            ],
-            'body' => json_encode([
-                'from_district_id' => 1488,
-                'to_district_id' => 1452,
-                'to_ward_code' => '21012',
-                'weight' => 200,
-                'cod_value' => 10000
-            ])
-        ]);
-
-        // $shipfee = json_decode($response->getBody()->getContents(), true);
-
-        $client = new Client();
-        $response = $client->post('https://tungsnk.tech:8082/api/shipping_fee', [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Accept' => 'application/json'
-            ],
-            'body' => json_encode([
-                'from_district_id' => 1488,
-                'to_district_id' => 1452,
-                'to_ward_code' => '21012',
-                'weight' => 200,
-                'cod_value' => 10000
-            ])
-        ]);
-
-        // $shipfee = json_decode($response->getBody()->getContents(), true);
-        // dd($shipfee);
+        $userId = $cart['id_user'];
+        if($userId  > 8) {
+            $userId = 3;
+        }
+        $userData = null;
+        $url = 'https://api-admin-dype.onrender.com/api/user';
+        $response = file_get_contents($url);
+        $users = json_decode($response, true); // lay duoc du lieu nhe
+        foreach($users as $user){
+            if($user['id'] == $userId){
+                $userData = $user;
+                break;
+            }
+        }
 
         return view('orders.formCreateOrder', [
+            'user' => $userData,
             'cart' => $cart
         ]);
     }

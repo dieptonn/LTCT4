@@ -147,7 +147,7 @@
                     </div>
                     <div class="delivery-content-left-email">
                         <div class="email"><input type="email" name="email"
-                                placeholder="Email Adress ( optional )"></div>
+                                value = "{{$user['email']}}" ></div>
                         <div>
 
                             <div>
@@ -161,9 +161,9 @@
                         <div>
                             <div class="name-phone">
                                 <div class="name"><input type="text" name="name" id=""
-                                        placeholder="Tên người nhận"></div>
+                                        value = "{{$user['name']}}"></div>
                                 <div class="phone"><input type="tel" name="phone" id=""
-                                        placeholder="Số điện thoại"> </div>
+                                        value = "{{$user['phoneNumber']}}"> </div>
 
                             </div>
                             <div class="adress">
