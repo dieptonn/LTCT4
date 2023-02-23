@@ -176,7 +176,7 @@ a:hover {
 
         <div class="menu-order">
             <ul type="none">
-                <li><a href="/listOrderByUser/21" class="active">Tất cả</a></li>
+                <li><a href="/listOrderByUser" class="active">Tất cả</a></li>
                 <li><a href="/getOrderByState/thành công">Thành công</a></li>
                 <li><a href="/getOrderByState/chờ lấy hàng/">Chờ lấy hàng</a></li>
                 <li><a href="/getOrderByState/đang giao">Đang giao</a></li>
